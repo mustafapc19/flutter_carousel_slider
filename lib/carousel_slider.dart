@@ -31,14 +31,18 @@ class CarouselSlider extends StatefulWidget {
 
   final int itemCount;
 
+  PageController pageController;
+
   CarouselSlider(
       {@required this.items,
       @required this.options,
       carouselController,
+      PageController pageController,
       Key key})
       : itemBuilder = null,
         itemCount = items != null ? items.length : 0,
         _carouselController = carouselController ?? CarouselController(),
+        pageController = pageController,
         super(key: key);
 
   /// The on demand item builder constructor
@@ -82,10 +86,11 @@ class CarouselSliderState extends State<CarouselSlider>
     carouselState.itemCount = widget.itemCount;
 
     // pageController needs to be re-initialized to respond to state changes
-    pageController = PageController(
+    /* pageController = PageController(
       viewportFraction: options.viewportFraction,
       initialPage: carouselState.realPage,
-    );
+    ); */
+    pageController = widget.pageController;
     carouselState.pageController = pageController;
 
     // handle autoplay when state changes
@@ -108,11 +113,11 @@ class CarouselSliderState extends State<CarouselSlider>
         : carouselState.initialPage;
     handleAutoPlay();
 
-    pageController = PageController(
+   /*  pageController = PageController(
       viewportFraction: options.viewportFraction,
       initialPage: carouselState.realPage,
-    );
-
+    ); */
+    pageController = widget.pageController;
     carouselState.pageController = pageController;
   }
 
